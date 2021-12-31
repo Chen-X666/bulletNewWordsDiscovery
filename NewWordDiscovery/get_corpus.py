@@ -46,7 +46,7 @@ def get_corpus(file, data_col=None, txt_sep=None, encoding='utf8', clean=True, T
 
     logger.info('DataPretreatment——————————Re Clean(emoji+tra2sim+cap2low)——————————DataPretreatment')
     logger.info('DataPretreatment——————————initiate emjoji——————————DataPretreatment')
-    #getEmojiCorpus(emojisCorpus)
+    getEmojiCorpus(emojisCorpus)
     # 正则清洗，只提取汉字、数字、字母
     if clean:
         # 正则表达式转换，只提取汉字、数字、字母
