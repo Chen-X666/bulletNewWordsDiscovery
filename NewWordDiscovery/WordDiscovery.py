@@ -14,14 +14,11 @@ Describe:  Github link: https://github.com/Chen-X666
 import math
 import os
 import pickle
-import re
 import time
 from math import log
 import logging
 from multiprocessing import Process, Queue, cpu_count
-from .LOG import logger_set  # 日志设置文件
-from .edgeAdvanced import edgeAdavanced
-from .get_corpus import get_corpus  # 文本读取文件
+from NewWordDiscovery.tool.LOG import logger_set  # 日志设置文件
 
 logger = logging.getLogger('NLP')
 
@@ -131,7 +128,7 @@ def search_n_word(process_i, queue_data, n_gram, args, p_min=0.00001, co_min=100
                                (word_i, n_gram, word_i_count, co, front_freedom, back_freedom))
 
     # 将词搜索结果 保存到临时文件中
-    with open(os.path.join(temp_path, 'NewWordResult_%s_%d_ngram.tmp' % (args.file_name, n_gram)), 'wb') as f:
+    with open(os.path.join(temp_path, 'CandidateWordResult_%s_%d_ngram.tmp' % (args.file_name, n_gram)), 'wb') as f:
         pickle.dump(search_result, f)
 
     queue_data.put({process_i: 'OVER'})
@@ -220,7 +217,7 @@ def search_2_word(process_i, queue_data, args, p_min=0.00001, co_min=100, h_min=
                                (word_i, 2, word_i_count, co, front_freedom, back_freedom))
 
     # 将词搜索结果 保存到临时文件中
-    with open(os.path.join(temp_path, 'NewWordResult_%s_%d_ngram.tmp' % (args.file_name, 2)), 'wb') as f:
+    with open(os.path.join(temp_path, 'CandidateWordResult_%s_%d_ngram.tmp' % (args.file_name, 2)), 'wb') as f:
         pickle.dump(search_result, f)
 
     queue_data.put({process_i: 'OVER'})

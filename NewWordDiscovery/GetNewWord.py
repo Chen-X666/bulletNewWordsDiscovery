@@ -74,8 +74,6 @@ def deleteTemp():
     file = os.path.join(cwd, 'temp')
     shutil.rmtree(file)
 
-
-
 def candidateRep(args,keyword,corpus):
     maxnum = 0
     macthall = re.finditer(r'(?i)(' + re.escape(keyword) + ')+', corpus)
@@ -177,8 +175,8 @@ def get_new_word(args):
 
 
     logger.info("CandidateWordResult path:  {}  ".format(csv_path))
-    standard(csv_path, column='Den')
-    standard(csv_path, column='Rep')
+    #standard(csv_path, column='Den')
+    #standard(csv_path, column='Rep')
     deleteTemp()#删除全部本地缓存
 
     return csv_path

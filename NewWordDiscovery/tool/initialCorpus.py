@@ -12,7 +12,8 @@ import pandas as pd
 
 logger = logging.getLogger('NLP')
 #  当前文件路径 的上层路径， 'NLP' 所在目录   'C:\Users\Chen\Desktop\NewWordDiscovery'
-cwd = os.path.abspath(os.path.join(os.path.abspath(os.path.dirname(__file__)), '..'))
+cwd = os.path.abspath(os.path.join(os.path.abspath(os.path.dirname(__file__)), '../..'))
+
 
 def getEmojiCorpus(file):
     # 输入文件名时，默认其存放路径为 .\Corpus'
@@ -40,4 +41,4 @@ def getRamdomForestModel(file):
     return filePath
 
 if __name__ == '__main__':
-    print()
+    print(getRamdomForestModel('RandomForest.model'))

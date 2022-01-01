@@ -8,31 +8,65 @@ Describe:  Github link: https://github.com/Chen-X666
 """
 import logging
 import os
+import time
 
 import joblib
 import pandas as pd
-from NewWordDiscovery import initialCorpus
+from NewWordDiscovery.tool import initialCorpus
 
 logger = logging.getLogger('NLP')
 #  当前文件路径 的上层路径， 'NLP' 所在目录   'C:\Users\Chen\Desktop\NewWordDiscovery'
 cwd = os.path.abspath(os.path.join(os.path.abspath(os.path.dirname(__file__)), '..'))
 
-def predictNewWord():
+class Arguments:
+    #  当前文件路径 的上层路径
+    CWD = os.path.abspath(os.path.join(os.path.abspath(os.path.dirname(__file__)), '..'))
+
+    # 调用当前文件时的系统日期时间
+    Call_Time = time.strftime('%Y%m%d%H%M%S', time.localtime())  # 初始化时间， 导入此文件时间，实例化时不变
+
+    def __init__(self):
+        self.start_time = time.time()  # 实例化时间
+
+    # 打印当前存储类中的所有参数 取值
+    def __repr__(self):
+        arg_values = '\n'.join(['     {}: {}'.format(x, self.__getattribute__(x)) for x in dir(self) if x[0] != '_'])
+        return 'Arguments Values:  \n{}'.format(arg_values)
+
+#输出新词
+def toNewWordCsv(newWords,file_name):
+    csv_path = os.path.join(os.path.abspath(os.path.join(os.path.abspath(os.path.dirname(__file__)), '..')), 'NewWordResult',
+                            'NewWordResult_%s.csv' % (file_name))
+    with open(csv_path, 'w',encoding='utf-8') as f_csv:
+        for i in newWords:
+            print(i, file=f_csv)
+    logger.info("NewWordResult path:  {}  ".format(csv_path))
+
+def predictNewWord(args):
     randomForest = joblib.load(initialCorpus.getRamdomForestModel('RandomForest.model'))
     # 模型预测
     # 预测集数据预处理
-    predict_data = pd.read_csv('预测集.csv',encoding='GBK')
-    del predict_data['Word']
-    del predict_data['Frequence']
-    #predict_data = predict_data[predict_data['Mark'] >= 0]
-    predict_data = predict_data.iloc[:, :-1]
-    print("输入特征数据：{}".format(predict_data.T))
-    print("模型预测结果：{}".format(randomForest.predict(predict_data)))
-    predictData = randomForest.predict(predict_data)
-    trainingData = pd.read_csv('预测集.csv', encoding='GBK')
-    #trainingData = trainingData[trainingData['Mark'] >= 0]
-    trainingData['Mark_Pre'] = predictData.tolist()
-    trainingData.to_csv('预测集结果.csv',encoding='GBK')
+    csv_path = os.path.join(args.CWD, 'CandidateWordResult',
+                            'CandidateWordResult_%s.csv' % (args.file_name))
+    predict_data = pd.read_csv(csv_path,encoding='gbk')
+    if not predict_data.empty:
+        del predict_data['Word']
+        del predict_data['Frequence']
+        del predict_data['edgeAdavanced']
+        #predict_data = predict_data[predict_data['Mark'] >= 0]
+        predict_data = predict_data.iloc[:, :-1]
+        print(predict_data)
+        print("输入特征数据：{}".format(predict_data.T))
+        print("模型预测结果：{}".format(randomForest.predict(predict_data)))
+        predictData = randomForest.predict(predict_data)
+        outputData = pd.read_csv(csv_path, encoding='gbk')
+        #trainingData = trainingData[trainingData['Mark'] >= 0]
+        outputData['Mark_Pre'] = predictData.tolist()
+        outputData = outputData[outputData['Mark_Pre'] < 1]
+        newWords = outputData['Word'].tolist()
+        toNewWordCsv(newWords=newWords,file_name=args.file_name)
 
 if __name__ == '__main__':
-    randomForest = predictNewWord()
+    args = Arguments()
+    args.file_name = 'BV1Gb411P7wK.csv'
+    randomForest = predictNewWord(args)

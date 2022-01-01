@@ -14,9 +14,10 @@ import os
 from collections import Counter
 
 from NewWordDiscovery.tool.langconv import *
-from NewWordDiscovery.initialCorpus import getEmojiCorpus
+from NewWordDiscovery.tool.initialCorpus import getEmojiCorpus
 from NewWordDiscovery.tool.flashText import *
 import pandas as pd
+import re
 
 logger = logging.getLogger('NLP')
 

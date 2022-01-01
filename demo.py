@@ -24,7 +24,7 @@ if __name__ == '__main__':
         from NewWordDiscovery import new_word_discover  # 新词发现程序
         new_word_discover(bvid+'.csv', f_data_col='bulletContent', f_time_col='videoLength', f_encoding='utf-8', f_txt_sep='\n',
                           batch_len=10000000,
-                          n_gram=5, p_min=10, co_min=5.2, h_min=-1, top_n=10000000,emojiCorpus='emojis.csv')
+                          n_gram=5, p_min=10, co_min=4, h_min=1.2, top_n=10000000,emojiCorpus='emojis.csv')
         time.sleep(2)
 
 

@@ -28,7 +28,7 @@ def logger_set(path, f_level='DEBUG', s_level='DEBUG', name='main'):
     # 输入为文件名时，默认其存放路径为 log 文件夹下。 输入为文件绝对路径时保存到路径文件上【方便与其它代码合并日志】
     if not os.path.isfile(path):
         #  当前文件路径 的上层路径， 'NLP' 所在目录   'C:\Users\Chen\Desktop\NLP_Project'
-        cwd = os.path.abspath(os.path.join(os.path.abspath(os.path.dirname(__file__)), '..'))
+        cwd = os.path.abspath(os.path.join(os.path.abspath(os.path.dirname(__file__)), '../..'))
         path = os.path.join(cwd, 'log', path)
 
     # 创建一个handler，用于写入日志文件 【默认为 DEBUG 级别】

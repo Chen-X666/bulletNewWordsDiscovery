@@ -27,8 +27,8 @@ from multiprocessing import Process, Queue, cpu_count
 import pickle
 import time
 import logging
-from .LOG import logger_set  # 日志设置文件
-from .get_corpus import get_corpus  # 文本读取文件
+from NewWordDiscovery.tool.LOG import logger_set  # 日志设置文件
+from NewWordDiscovery.get_corpus import get_corpus  # 文本读取文件
 import jieba
 logger = logging.getLogger('NLP')
 

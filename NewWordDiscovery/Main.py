@@ -7,14 +7,12 @@ Version:  V 0.1
 File:     bulletDensity.py
 Describe:  Github link: https://github.com/Chen-X666
 """
-import os
 import time
-import logging
 from .SlideCutWord import multi_count_word  # 多进程切词计数
 from .WordDiscovery import word_discover  # 新词发现程序
 from .GetNewWord import get_new_word  # 提取各个进程找到的新词
-from .LOG import logger_set  # 调用日志设置文件
-import pandas as pd
+from NewWordDiscovery.tool.LOG import logger_set  # 调用日志设置文件
+from NewWordDiscovery.PredictNewWord import *
 
 # 新词发现程序中使用的 变量存储类
 class Arguments:
@@ -120,12 +118,16 @@ def new_word_discover(file, f_data_col=None, credential=None,f_time_col = None,f
     # 新词搜索主程序
     word_discover(args, search_word_parameter, process_no=process_no)
 
-    # 提取各个进程找到的新词
+    # 提取各个进程找到的候选词
     result_csv = get_new_word(args)
+
+    #候选词预测
+    logger.info('PredictCandidateWords Starting......')
+    predictNewWord(args=args)
+
 
     # 结束。 计算用时
     logger.info('NewWordDiscover Finish！ UsedTime {:.1f} Sec.\n'.format(time.time() - args.start_time))
     # TODO 结束当前新词发现程序， 清空logger的handlers  【是否有更好的结束方式？？？】
     logger.handlers = []
 
-    return result_csv
