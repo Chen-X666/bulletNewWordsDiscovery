@@ -9,8 +9,6 @@ Describe:  Github link: https://github.com/Chen-X666
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 from copy import deepcopy
-import re
-from .zh_wiki import *
 
 try:
     import psyco
@@ -19,9 +17,9 @@ except:
     pass
 
 try:
-    from .zh_wiki import zh2Hant, zh2Hans
+    from NewWordDiscovery.tool.zh_wiki import zh2Hant, zh2Hans
 except ImportError:
-    from .zh_wiki import zh2Hant, zh2Hans
+    from NewWordDiscovery.tool.zh_wiki import zh2Hant, zh2Hans
 
 import sys
 py3k = sys.version_info >= (3, 0, 0)

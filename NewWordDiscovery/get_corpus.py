@@ -10,13 +10,11 @@ File:     bulletDensity.py
 Describe:  Github link: https://github.com/Chen-X666
 """
 import logging
-import re
-import csv
 import os
 from collections import Counter
 
-from NewWordDiscovery.langconv import *
-from NewWordDiscovery.initialCorpus import getEmojiCorpus,getModernCorpus,getNewWordCorpus
+from NewWordDiscovery.tool.langconv import *
+from NewWordDiscovery.initialCorpus import getEmojiCorpus
 from NewWordDiscovery.tool.flashText import *
 import pandas as pd
 
