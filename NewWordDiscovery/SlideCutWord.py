@@ -48,7 +48,7 @@ def count_word(process_i, queue_data, windows, args):
 
     # 读取文本，迭代器
     corpus_iterator = get_corpus(args.path_corpus, data_col=args.f_data_col, txt_sep=args.f_txt_sep,
-                                 encoding=args.f_encoding,emojisCorpus=args.emojiCorpus)
+                                 encoding=args.f_encoding, emojiCorpus=args.emojiCorpus, file_name=args.file_name)
 
     line_i = 0   # 文本读取行序号
     corpus = ''   # 文本合并
@@ -81,7 +81,6 @@ def count_word(process_i, queue_data, windows, args):
 
     print('\r%3d WordWindows:%2d  line: %d      ' % (process_i, windows, line_i), end='')
     logger_i.debug('%3d WordWindows:%2d    Corpus line: %d' % (process_i, windows, line_i))
-    print(result_deque)
     # 更新各个词组出现次数
     result_count.update(Counter(result_deque))
 

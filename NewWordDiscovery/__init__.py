@@ -54,8 +54,12 @@ if not os.path.isdir(os.path.join(CWD, 'temp')):
     os.mkdir(os.path.join(CWD, 'temp'))
 
 # 判断是否存在结果文件夹 ，若无则重新创建
-if not os.path.isdir(os.path.join(CWD, 'result')):
-    os.mkdir(os.path.join(CWD, 'result'))
+if not os.path.isdir(os.path.join(CWD, 'CandidateWordResult')):
+    os.mkdir(os.path.join(CWD, 'CandidateWordResult'))
+
+# 判断是否存在结果文件夹 ，若无则重新创建
+if not os.path.isdir(os.path.join(CWD, 'NewWordResult')):
+    os.mkdir(os.path.join(CWD, 'NewWordResult'))
 
 # 判断是否存在日志文件夹 ，若无则重新创建
 if not os.path.isdir(os.path.join(CWD, 'log')):

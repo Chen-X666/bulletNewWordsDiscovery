@@ -62,7 +62,7 @@ def getNewWordList():
 def getCorpus(args):
     # 读取文本，迭代器
     corpus_iterator = get_corpus(args.path_corpus, data_col=args.f_data_col, txt_sep=args.f_txt_sep,
-                                 encoding=args.f_encoding)
+                                 encoding=args.f_encoding, file_name=args.file_name, emojiCorpus=args.emojiCorpus)
     corpus = ''
     for line_i, corpus_i in enumerate(corpus_iterator):
         corpus = corpus + str(corpus_i) + '\n'
@@ -121,7 +121,7 @@ def get_new_word(args):
     # 读取文件夹下所有文件名称
     file_list = os.listdir(os.path.join(args.CWD, 'temp'))
     # 提取新词发现对应的文件
-    file_list = [file_i for file_i in file_list if 'NewWordResult_%s' % args.file_name in file_i]
+    file_list = [file_i for file_i in file_list if 'CandidateWordResult_%s' % args.file_name in file_i]
     # 合并各个进程的搜索结果
     result_count = []
     for file_i in sorted(file_list, reverse=False):
@@ -130,13 +130,11 @@ def get_new_word(args):
             result_count_i = pickle.load(f_read_tmp)
             # 合并 搜索结果
             result_count.extend(result_count_i)
-        logger.info("NewWordResult File:  {}  WordNum: {}".format(file_i, len(result_count_i)))
+        logger.info("CandidateWordResult File:  {}  WordNum: {}".format(file_i, len(result_count_i)))
 
     # 保存到 CSV 文件 中
-    # csv_path = os.path.join(args.CWD, 'result',
-    #                         'NewWordDiscovery_%s_%s.csv' % (args.file_name, args.Call_Time))
-    csv_path = os.path.join(args.CWD, 'result',
-                            'NewWordDiscovery_%s.csv' % (args.file_name))
+    csv_path = os.path.join(args.CWD, 'CandidateWordResult',
+                            'CandidateWordResult_%s.csv' % (args.file_name))
     with open(csv_path, 'w') as f_csv:
         # 打印标题
         print('Word,Num,Frequence,Mut,Freedom_L,Freedom_R,Rep,Den,edgeAdavanced,Mark', file=f_csv)
@@ -178,7 +176,7 @@ def get_new_word(args):
                 #print(print_str, file=f_csv)
 
 
-    logger.info("NewWordDiscovery path:  {}  ".format(csv_path))
+    logger.info("CandidateWordResult path:  {}  ".format(csv_path))
     standard(csv_path, column='Den')
     standard(csv_path, column='Rep')
     deleteTemp()#删除全部本地缓存
@@ -190,5 +188,5 @@ if __name__ == '__main__':
     args = Arguments()
     args.path_corpus = 'BV1j4411W7F7.csv'  # 语料路径或语料名称
     args.file_name = os.path.basename(args.path_corpus)
-    videoMeg = asyncio.get_event_loop().run_until_complete(videoMeg(args))
-    print(videoMeg)
+    # videoMeg = asyncio.get_event_loop().run_until_complete(videoMeg(args))
+    # print(videoMeg)

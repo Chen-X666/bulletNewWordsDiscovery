@@ -211,9 +211,6 @@ def search_2_word(process_i, queue_data, args, p_min=0.00001, co_min=100, h_min=
                     front_word_num.append(word_n1_count[word_n1_i])
                 if word_n1_i[:-1] == word_i:
                     back_word_num.append(word_n1_count[word_n1_i])
-            print(word_i)
-            print(front_word_num)
-            print(back_word_num)
             front_freedom = get_freedom(front_word_num)
             back_freedom = get_freedom(back_word_num)
             # 输出满足自由度要求的词组

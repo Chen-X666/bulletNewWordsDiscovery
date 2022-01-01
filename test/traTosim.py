@@ -37,7 +37,6 @@ def getAllTxt(filesPath,resultPath):
     f = open(resultPath, 'w',encoding='utf-8')
     # 先遍历文件名
     for filename in filenames:
-        print(filename)
         filepath = filedir + '/' + filename
         # 遍历单个文件，读取行数
         for line in open(filepath,encoding='utf-8'):
@@ -51,13 +50,11 @@ if __name__=="__main__":
     data = f.readlines()
     f.close()
     with open("../../Data/allData/guichuAllToSimpleLanguage.txt", "w", encoding='utf-8') as f1:
-        print(len(data))
         cop = re.compile("[^\u4e00-\u9fa5^a-z^A-Z^\n]")
         for line in data:
             line = Traditional2Simplified(line.lower())
             line = cop.sub('', line)
             if line != '\n':
-                print(line)
                 f1.write(line)
     f1.close()
     print('finished')

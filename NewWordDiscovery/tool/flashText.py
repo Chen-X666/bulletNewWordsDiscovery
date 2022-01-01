@@ -34,3 +34,4 @@ if __name__ == '__main__':
     wordlist = ['健康','减肥']
     text = '今天你减肥了吗，今天你健康了吗，减肥 = 健康！'
     actree = build_actree(wordlist)
+    print(ac_detect(actree,text))
