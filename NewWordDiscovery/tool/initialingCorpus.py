@@ -3,7 +3,7 @@
 Time:     2021/12/5 0:13
 Author:   ChenXin
 Version:  V 0.1
-File:     initialCorpus.py
+File:     initialingCorpus.py
 Describe:  Github link: https://github.com/Chen-X666
 """
 import logging

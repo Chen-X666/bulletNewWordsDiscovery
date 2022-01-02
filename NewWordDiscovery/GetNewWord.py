@@ -133,6 +133,8 @@ def get_new_word(args):
     # 保存到 CSV 文件 中
     csv_path = os.path.join(args.CWD, 'CandidateWordResult',
                             'CandidateWordResult_%s.csv' % (args.file_name))
+
+
     with open(csv_path, 'w') as f_csv:
         # 打印标题
         print('Word,Num,Frequence,Mut,Freedom_L,Freedom_R,Rep,Den,edgeAdavanced,Mark', file=f_csv)
@@ -142,17 +144,6 @@ def get_new_word(args):
                 new_word_i.append(candidateRep(args=args,keyword=new_word_i[0],corpus=corpus))
                 new_word_i.append(candidateDen(args=args,keyword=new_word_i[0],corpus=corpus))
                 new_word_i.append(edgeAdavanced(keyword=new_word_i[0],corpus=corpus)+min(new_word_i[4],new_word_i[5]))
-
-                # new_word_i.append(videoBvid)
-                # new_word_i.append(videoTname)
-                # new_word_i.append(videoView)
-                # new_word_i.append(videoLike)
-                # new_word_i.append(videoDanmaku)
-                # new_word_i.append(videoReply)
-                # new_word_i.append(videoCoin)
-                # new_word_i.append(videoShare)
-                # new_word_i.append(videoFavorite)
-                # new_word_i.append(videoLength)
 
                 if new_word_i[0] in newWord:
                     new_word_i.append(1)
@@ -175,8 +166,6 @@ def get_new_word(args):
 
 
     logger.info("CandidateWordResult path:  {}  ".format(csv_path))
-    #standard(csv_path, column='Den')
-    #standard(csv_path, column='Rep')
     deleteTemp()#删除全部本地缓存
 
     return csv_path

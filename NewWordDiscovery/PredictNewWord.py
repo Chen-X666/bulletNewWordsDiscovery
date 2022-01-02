@@ -12,7 +12,7 @@ import time
 
 import joblib
 import pandas as pd
-from NewWordDiscovery.tool import initialCorpus
+from NewWordDiscovery.tool import initialingCorpus
 
 logger = logging.getLogger('NLP')
 #  当前文件路径 的上层路径， 'NLP' 所在目录   'C:\Users\Chen\Desktop\NewWordDiscovery'
@@ -37,13 +37,13 @@ class Arguments:
 def toNewWordCsv(newWords,file_name):
     csv_path = os.path.join(os.path.abspath(os.path.join(os.path.abspath(os.path.dirname(__file__)), '..')), 'NewWordResult',
                             'NewWordResult_%s.csv' % (file_name))
-    with open(csv_path, 'w',encoding='utf-8') as f_csv:
+    with open(csv_path, 'a',encoding='utf-8') as f_csv:
         for i in newWords:
             print(i, file=f_csv)
     logger.info("NewWordResult path:  {}  ".format(csv_path))
 
 def predictNewWord(args):
-    randomForest = joblib.load(initialCorpus.getRamdomForestModel('RandomForest.model'))
+    randomForest = joblib.load(initialingCorpus.getRamdomForestModel('RandomForest.model'))
     # 模型预测
     # 预测集数据预处理
     csv_path = os.path.join(args.CWD, 'CandidateWordResult',
