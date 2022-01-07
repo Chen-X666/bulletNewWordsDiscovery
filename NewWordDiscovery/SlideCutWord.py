@@ -50,6 +50,11 @@ def count_word(process_i, queue_data, windows, args):
     corpus_iterator = get_corpus(args.path_corpus, data_col=args.f_data_col, txt_sep=args.f_txt_sep,
                                  encoding=args.f_encoding, emojiCorpus=args.emojiCorpus, file_name=args.file_name)
 
+    #缓存corpus
+    with open(os.path.join(args.CWD, 'temp',
+                           'Corpus_%s.tmp' % (os.path.basename(args.path_corpus))), 'wb') as f:
+        pickle.dump(corpus_iterator, f)
+    #count
     line_i = 0   # 文本读取行序号
     corpus = ''   # 文本合并
     # 循环计算文档中词组出现次数

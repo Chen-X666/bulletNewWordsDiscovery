@@ -15,14 +15,12 @@ import pickle
 import logging
 import shutil
 import time
-
-
-
 from NewWordDiscovery.get_corpus import get_corpus
 import pandas as pd
 import re
 from .edgeAdvanced import edgeAdavanced
 logger = logging.getLogger('NLP')
+from NewWordDiscovery.tool.initialingCorpus import *
 
 class Arguments:
     #  当前文件路径 的上层路径
@@ -38,35 +36,6 @@ class Arguments:
     def __repr__(self):
         arg_values = '\n'.join(['     {}: {}'.format(x, self.__getattribute__(x)) for x in dir(self) if x[0] != '_'])
         return 'Arguments Values:  \n{}'.format(arg_values)
-
-def getModernCorpusWordList():
-    file = 'ModernCorpusWordlist.csv'
-    # 输入文件名时，默认其存放路径为 .\NLP\Data'
-    if not os.path.isfile(file):
-        #  当前文件路径 的上层路径， 'NLP' 所在目录   'C:\Users\Chen\Desktop\NLP'
-        cwd = os.path.abspath(os.path.join(os.path.abspath(os.path.dirname(__file__)), '..'))
-        file = os.path.join(cwd, 'Corpus', file)
-    df = pd.read_csv(file,encoding='GBK')['词语'].to_list()
-    return df
-
-def getNewWordList():
-    file = 'newWord.csv'
-    # 输入文件名时，默认其存放路径为 .\NLP\Data'
-    if not os.path.isfile(file):
-        #  当前文件路径 的上层路径， 'NLP' 所在目录   'C:\Users\Chen\Desktop\NLP'
-        cwd = os.path.abspath(os.path.join(os.path.abspath(os.path.dirname(__file__)), '..'))
-        file = os.path.join(cwd, 'Corpus', file)
-    df = pd.read_csv(file,encoding='utf-8')['newWord'].to_list()
-    return df
-
-def getCorpus(args):
-    # 读取文本，迭代器
-    corpus_iterator = get_corpus(args.path_corpus, data_col=args.f_data_col, txt_sep=args.f_txt_sep,
-                                 encoding=args.f_encoding, file_name=args.file_name, emojiCorpus=args.emojiCorpus)
-    corpus = ''
-    for line_i, corpus_i in enumerate(corpus_iterator):
-        corpus = corpus + str(corpus_i) + '\n'
-    return corpus
 
 
 def deleteTemp():
@@ -89,32 +58,11 @@ def candidateRep(args,keyword,corpus):
                     maxnum = countnum
     return maxnum
 
-def candidateDen(args,keyword,corpus):
-    videoLength = args.videoLength
-    count = 0
-    macthall = re.finditer(r'(?im)^.*?' + re.escape(keyword) + '.*', corpus)
-    if macthall:
-        for everymatch in macthall:
-            count += 1
-    #无效数据
-    if videoLength==0:
-        count = 0
-        videoLength=1
-    return count/videoLength
-
-def standard(csv_path,column):
-    df = pd.read_csv(csv_path,encoding='GBK')
-    if len(df[column].to_list())==0:print('0')
-    else:
-        Max = max(df[column].to_list())
-        if Max!=0: df[column] = df[column]/Max
-        else:print('0')
-        df.to_csv(csv_path,encoding='GBK')
 
 
 def get_new_word(args):
-    modernCorpus = getModernCorpusWordList()
-    newWord = getNewWordList()
+    modernCorpus = getModernCorpus(args.modernCorpus)
+    newWord = getNewWordCorpus(args.newWordCorpus)
     corpus = getCorpus(args)
     # 读取文件夹下所有文件名称
     file_list = os.listdir(os.path.join(args.CWD, 'temp'))
@@ -137,7 +85,7 @@ def get_new_word(args):
 
     with open(csv_path, 'w') as f_csv:
         # 打印标题
-        print('Word,Num,Frequence,Mut,Freedom_L,Freedom_R,Rep,Den,edgeAdavanced,Mark', file=f_csv)
+        print('Word,Num,Frequence,Mut,Freedom_L,Freedom_R,Rep,Den,edgeAdvanced,Mark', file=f_csv)
         for j, new_word_i in enumerate(result_count):
             # 只提取不含空格的词组
             if ' ' not in new_word_i[0]:
@@ -166,7 +114,7 @@ def get_new_word(args):
 
 
     logger.info("CandidateWordResult path:  {}  ".format(csv_path))
-    deleteTemp()#删除全部本地缓存
+    #deleteTemp()#删除全部本地缓存
 
     return csv_path
 

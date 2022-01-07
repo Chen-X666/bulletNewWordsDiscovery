@@ -14,6 +14,7 @@ Describe:  Github link: https://github.com/Chen-X666
 import math
 import os
 import pickle
+import re
 import time
 from math import log
 import logging
@@ -22,6 +23,24 @@ from NewWordDiscovery.tool.LOG import logger_set  # 日志设置文件
 
 logger = logging.getLogger('NLP')
 
+def get_corpus():
+    for line_i, corpus_i in enumerate(corpus_iterator):
+        corpus = corpus + corpus_i
+
+#覆盖率
+def get_den(args,keyword):
+
+    videoLength = args.videoLength
+    count = 0
+    macthall = re.finditer(r'(?im)^.*?' + re.escape(keyword) + '.*', corpus)
+    if macthall:
+        for everymatch in macthall:
+            count += 1
+    #无效数据
+    if videoLength==0:
+        count = 0
+        videoLength=1
+    return count/videoLength
 
 # 以信息熵的方式 计算自由度 sum(-pi*log(pi))
 def get_freedom(word_count):
@@ -35,7 +54,6 @@ def get_freedom(word_count):
         p = word_x / word_count_sum
         entropy = entropy - p * math.log(p)
     return entropy
-
 
 
 # 搜索 3 个字以上词
@@ -121,7 +139,7 @@ def search_n_word(process_i, queue_data, n_gram, args, p_min=0.00001, co_min=100
             front_freedom = get_freedom(front_word_num)
             back_freedom = get_freedom(back_word_num)
 
-            # 输出满足自由度要求的词组
+            # 计算满足自由度要求的词组的覆盖率与重复率
             if min(front_freedom, back_freedom) > h_min:
                 search_result.append([word_i, n_gram, word_i_count, co, front_freedom, back_freedom])
                 logger_i.debug('{},{},{},{:.1f},{:.3f},{:.3f}'.format
@@ -314,3 +332,12 @@ def word_discover(args, parameter, process_no=None):
 
     logger.info('进程信息： {} '.format(queue_data_out))
     logger.info('- ' * 30)
+
+if __name__ == '__main__':
+    temp_path = os.path.join(os.path.abspath(os.path.join(os.path.abspath(os.path.dirname(__file__)), '..')), 'temp')
+    file_name = 'BV1Ct411c7tQ.csv'
+    with open(os.path.join(temp_path, 'WordCount_%s_002.tmp' % file_name), 'rb') as f_read_tmp:
+        # 读取 文本行数 及 各词组词频数
+        print(f_read_tmp)
+        word_1_count = pickle.load(f_read_tmp)
+    print(word_1_count)

@@ -26,7 +26,7 @@ def getModernCorpus(file):
     # 输入文件名时，默认其存放路径为 .\Corpus'
     if not os.path.isfile(file):
         filePath = os.path.join(cwd, 'Corpus', file)
-    return pd.read_csv(filePath,encoding='utf-8')['词语'].to_list()
+    return pd.read_csv(filePath,encoding='gbk')['词语'].to_list()
 
 def getNewWordCorpus(file):
     # 输入文件名时，默认其存放路径为 .\Corpus'

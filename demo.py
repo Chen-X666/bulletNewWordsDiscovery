@@ -24,13 +24,13 @@ if __name__ == '__main__':
         from NewWordDiscovery import new_word_discover  # 新词发现程序
         new_word_discover(bvid+'.csv', f_data_col='bulletContent', f_time_col='videoLength', f_encoding='utf-8', f_txt_sep='\n',
                           batch_len=10000000,
-                          n_gram=5, p_min=10, co_min=4, h_min=1.2, top_n=10000000,emojiCorpus='emojis.csv')
+                          n_gram=5, p_min=10, co_min=4, h_min=1.2, top_n=10000000,emojiCorpus='emojis.csv',modernCorpus='ModernCorpus.csv',newWordCorpus='newWordCorpus.csv')
         time.sleep(2)
 
 
     """
     file:       待切词的文件 【绝对路径或文件名，若为文件名则默认存储路径为 .\\NLP\\Data】
-    f_data_col: 提取数据的列序号 默认为None 【整数 从 0 开始】
+    f_data_col: 提取数据的列序号 默认为None 【字符串】
     f_txt_sep:  txt 文件的切分字符  默认为None 【 csv 文件忽然此参数】
     f_encoding: 默认为utf8  utf8 | gbk
     n_gram:     提取的新词长度  默认为5。 即超过5个字符的新词不再处理
@@ -43,4 +43,7 @@ if __name__ == '__main__':
     level_f:    日志文件记录级别.  ['DEBUG', 'INFO', 'WARNING', 'ERROR', 'CRITICAL']  默认 INFO
     log_path:   日志存储路径，默认为 None，默认存储到 .\\NLP\\log\\NLP_[当前时间].log
     process_no: 多进程处理的进程数，int 类型，默认为None 即 CPU 核数
+    emojiCorpus: 颜文字语料库 【字符串】
+    modernCorpus: 现代汉语语料库 【字符串】
+    newWordCorpus: 新词语料库 【字符串】
     """

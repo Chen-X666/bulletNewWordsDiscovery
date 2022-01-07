@@ -32,9 +32,9 @@ class Arguments:
 
 
 # 新词发现调用程序
-def new_word_discover(file, f_data_col=None, credential=None,f_time_col = None,f_txt_sep=None, f_encoding='utf8',
+def new_word_discover(file, f_data_col=None, credential=None, f_time_col = None, f_txt_sep=None, f_encoding='utf8',
                       n_gram=5, batch_len=100000, top_n=100000, p_min=0.0001, co_min=100, h_min=1.2,
-                      level_s='INFO', level_f='DEBUG', log_path=None, process_no=None,emojiCorpus=None,newWordCorpus=None,ModernCorpus=None):
+                      level_s='INFO', level_f='DEBUG', log_path=None, process_no=None, emojiCorpus=None, newWordCorpus=None, modernCorpus=None):
     """
     :param file:       待切词的文件 【绝对路径或文件名，若为文件名则默认存储路径为 .\\NLP\\Data】
     :param f_data_col: 提取数据的列序号 默认为None 【整数 从 0 开始】
@@ -72,7 +72,7 @@ def new_word_discover(file, f_data_col=None, credential=None,f_time_col = None,f
     args.file_name = os.path.basename(args.path_corpus)  # 语料名称
     args.emojiCorpus = emojiCorpus
     args.newWordCorpus = newWordCorpus
-    args.ModernCorpus = ModernCorpus
+    args.modernCorpus = modernCorpus
     args.credential = credential
 
     if not os.path.isfile(file):
