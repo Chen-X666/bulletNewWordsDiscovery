@@ -51,9 +51,13 @@ def count_word(process_i, queue_data, windows, args):
                                  encoding=args.f_encoding, emojiCorpus=args.emojiCorpus, file_name=args.file_name)
 
     #缓存corpus
+    corpus = ''
+    for line_i, corpus_i in enumerate(corpus_iterator):
+        corpus = corpus + corpus_i
     with open(os.path.join(args.CWD, 'temp',
                            'Corpus_%s.tmp' % (os.path.basename(args.path_corpus))), 'wb') as f:
-        pickle.dump(corpus_iterator, f)
+        pickle.dump(corpus, f)
+    f.close()
     #count
     line_i = 0   # 文本读取行序号
     corpus = ''   # 文本合并
@@ -99,7 +103,6 @@ def count_word(process_i, queue_data, windows, args):
 
     queue_data.put({process_i: 'OVER'})
     logger_i.info('Process_i  %d  Finish!    ' % process_i)
-
 
 # 读取多进程队列 中的数据
 def read_queue_data(queue_data):

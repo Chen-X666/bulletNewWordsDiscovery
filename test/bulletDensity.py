@@ -31,7 +31,7 @@ def candicateDen(videoLength,sTxtStr,keyword):
     if macthall:
         for everymatch in macthall:
             count += 1
-    return count/videoLength
+    return count
 
 
 # 搜索函数
@@ -81,12 +81,14 @@ if __name__ == '__main__':
     # candidate.to_csv('training.csv',encoding='utf-8',index=False)
     # 读取文件内容
     hfile = open("2.txt", "r", encoding='utf-8');
-    sTxtStr = hfile.read();
+    sTxtStr = hfile.read()
+    print(sTxtStr)
     hfile.close()
 
     keyword = "给力"  # 搜索关键词
-    findnum = findkeywordnumc(sTxtStr, keyword)
-    print(findnum)
+    #findnum = findkeywordnumc(sTxtStr, keyword)
+    den = candicateDen(123,str(sTxtStr),keyword)
+    print(den)
 
 
 
