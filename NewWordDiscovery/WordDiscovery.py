@@ -118,6 +118,11 @@ def search_n_word(process_i, queue_data, n_gram, args, p_min=0.00001, co_min=100
         # 读取 文本行数 及 各词组词频数
         word_n1_count = pickle.load(f_read_tmp)
 
+    #载入语料
+    with open(os.path.join(temp_path, 'Corpus_%s.tmp' % args.file_name), 'rb') as f:
+        corpus = pickle.load(f)
+
+
     # 所有文本字符总长度
     word_count_sum = sum(word_1_count.values())
 

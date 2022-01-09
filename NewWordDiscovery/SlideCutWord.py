@@ -25,6 +25,7 @@ import time
 import logging
 from NewWordDiscovery.tool.LOG import logger_set  # 日志设置文件
 from .get_corpus import get_corpus  # 文本读取文件
+import pandas as pd
 
 logger = logging.getLogger('NLP')
 
@@ -50,14 +51,7 @@ def count_word(process_i, queue_data, windows, args):
     corpus_iterator = get_corpus(args.path_corpus, data_col=args.f_data_col, txt_sep=args.f_txt_sep,
                                  encoding=args.f_encoding, emojiCorpus=args.emojiCorpus, file_name=args.file_name)
 
-    #缓存corpus
-    corpus = ''
-    for line_i, corpus_i in enumerate(corpus_iterator):
-        corpus = corpus + corpus_i
-    with open(os.path.join(args.CWD, 'temp',
-                           'Corpus_%s.tmp' % (os.path.basename(args.path_corpus))), 'wb') as f:
-        pickle.dump(corpus, f)
-    f.close()
+
     #count
     line_i = 0   # 文本读取行序号
     corpus = ''   # 文本合并
@@ -135,6 +129,15 @@ def multi_count_word(args, process_no=None):
     queue_data_out = {}
     # 创建进程列表
     process_list = {}
+    # 缓存corpus
+    # 读取文本，迭代器
+    cwd = os.path.abspath(os.path.join(os.path.abspath(os.path.dirname(__file__)), '..'))
+    file = os.path.join(cwd, 'Data', args.path_corpus)
+    corpus_dump = pd.read_csv(file,encoding=args.f_encoding)[args.f_data_col].to_string()
+    with open(os.path.join(args.CWD, 'temp',
+                           'Corpus_%s.tmp' % (os.path.basename(args.file_name))), 'wb') as f:
+        pickle.dump(corpus_dump, f)
+    f.close()
 
     # 进行多进程处理 每次最大同时运行的进行数为 设定的 process_no
     for process_i, Line_set_i in enumerate(word_windows_list):

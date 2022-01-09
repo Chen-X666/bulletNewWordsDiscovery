@@ -51,7 +51,7 @@ def get_new_word(args):
 
     with open(csv_path, 'w') as f_csv:
         # 打印标题
-        print('Word,Num,Frequence,Mut,Freedom_L,Freedom_R,Rep,Den,Mark', file=f_csv)
+        print('Word,Num,Frequence,Mut,Freedom_L,Freedom_R,Den,Rep,Mark', file=f_csv)
         for j, new_word_i in enumerate(result_count):
             # 只提取不含空格的词组
             if ' ' not in new_word_i[0]:

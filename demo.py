@@ -7,31 +7,25 @@
 # 创建平台: PyCharm Community Edition    python 3.8
 # 版    本: V1.0
 """
-import asyncio
-import os
 import time
-
+from NewWordDiscovery import new_word_discover  # 新词发现程序
 import pandas as pd
 
 
 if __name__ == '__main__':
-    # #####################################  弹幕获取  返回提取的新词存储表格 **.csv 路径
-    time.sleep(2)
     bvids = pd.read_csv('Data/100预测.csv')['videoBvno'].tolist()
 
     for bvid in bvids:
-    #     #bvid = 'BV1qt411j7fV'
-        from NewWordDiscovery import new_word_discover  # 新词发现程序
         new_word_discover(bvid+'.csv', f_data_col='bulletContent', f_time_col='videoLength', f_encoding='utf-8', f_txt_sep='\n',
                           batch_len=10000000,
-                          n_gram=5, p_min=10, co_min=4, h_min=1.2, top_n=10000000,emojiCorpus='emojis.csv',modernCorpus='ModernCorpus.csv',newWordCorpus='newWordCorpus.csv')
+                          n_gram=5, p_min=5, co_min=4, h_min=1.2, top_n=10000000,emojiCorpus='emojis.csv',modernCorpus='ModernCorpus.csv',newWordCorpus='newWordCorpus.csv')
         time.sleep(2)
 
 
     """
     file:       待切词的文件 【绝对路径或文件名，若为文件名则默认存储路径为 .\\NLP\\Data】
     f_data_col: 提取数据的列序号 默认为None 【字符串】
-    f_txt_sep:  txt 文件的切分字符  默认为None 【 csv 文件忽然此参数】
+    f_txt_sep:  txt 文件的切分字符  默认为None 【 csv 文件忽略此参数】
     f_encoding: 默认为utf8  utf8 | gbk
     n_gram:     提取的新词长度  默认为5。 即超过5个字符的新词不再处理
     batch_len:  批次计算的文本字符串长度 。【 字符串长度减少可降低占用内存，默认100000个字符就进入统计计算】

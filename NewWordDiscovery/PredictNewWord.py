@@ -52,7 +52,7 @@ def predictNewWord(args):
     if not predict_data.empty:
         del predict_data['Word']
         del predict_data['Frequence']
-        del predict_data['edgeAdavanced']
+        #del predict_data['edgeAdavanced']
         #predict_data = predict_data[predict_data['Mark'] >= 0]
         predict_data = predict_data.iloc[:, :-1]
         print(predict_data)
