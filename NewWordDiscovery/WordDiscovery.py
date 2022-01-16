@@ -54,22 +54,22 @@ def get_den(args,keyword,corpus):
     return count/videoLength
 
 #复用率
-def get_Rep(args,keyword,corpus):
-    maxnum = 0
-    macthall = re.finditer(r'(?i)(' + re.escape(keyword) + ')+', corpus)
-    if macthall:
-        for everymatch in macthall:
-            # print(everymatch.group())
-            macthLine = re.finditer(r'(?i)' + re.escape(keyword), everymatch.group())
-            if macthLine:
-                countnum = 0
-                for mctline in macthLine:
-                    countnum += 1
-                if countnum > maxnum:
-                    maxnum = countnum
-    return maxnum
+def get_rep(corpus,keyword):
+  num=0
+  macthall = re.finditer(r'(?i)(' + re.escape(keyword) +  ')+' , corpus)
+  if macthall:
+     for everymatch in macthall:
+         #print(everymatch.group())
+         macthLine = re.finditer(r'(?i)' + re.escape(keyword) , everymatch.group())
+         if macthLine:
+            countnum=0
+            for mctline in macthLine:
+               countnum+=1
+            countnum = countnum - 1
+            num = num + countnum
+  return num
 
-# 以信息熵的方式 计算自由度 sum(-pi*log(pi))
+# 以信息熵的方式 计算自由度 sum(-pi*Log(pi))
 def get_freedom(word_count):
     """
     :param word_count: # 每个词组出现的次数 【1，2，4，6，2】
@@ -101,7 +101,7 @@ def search_n_word(process_i, queue_data, n_gram, args, p_min=0.00001, co_min=100
     logger_i = logging.getLogger("process%d_%d_ngram" % (process_i, n_gram))
 
     # 多进程临时文件夹
-    temp_path = os.path.join(args.CWD, 'temp')
+    temp_path = os.path.join(args.CWD, 'Temp')
     with open(os.path.join(temp_path, 'WordCount_%s_001.tmp' % args.file_name), 'rb') as f_read_tmp:
         # 读取 文本行数 及 各词组词频数
         word_1_count = pickle.load(f_read_tmp)
@@ -173,7 +173,7 @@ def search_n_word(process_i, queue_data, n_gram, args, p_min=0.00001, co_min=100
             # 计算满足自由度要求的词组的覆盖率与重复率
             if min(front_freedom, back_freedom) > h_min:
                 den = get_den(args=args,keyword=word_i,corpus=corpus)
-                rep = get_Rep(args=args,keyword=word_i,corpus=corpus)
+                rep = get_rep(keyword=word_i, corpus=corpus)
                 search_result.append([word_i, n_gram, word_i_count, co, front_freedom, back_freedom,den,rep])
                 logger_i.debug('{},{},{},{:.1f},{:.3f},{:.3f}'.format
                                (word_i, n_gram, word_i_count, co, front_freedom, back_freedom))
@@ -202,7 +202,7 @@ def search_2_word(process_i, queue_data, args, p_min=0.00001, co_min=100, h_min=
     logger_i = logging.getLogger("process%d_%d_ngram" % (process_i, 2))
 
     # 多进程临时文件夹
-    temp_path = os.path.join(args.CWD, 'temp')
+    temp_path = os.path.join(args.CWD, 'Temp')
     with open(os.path.join(temp_path, 'WordCount_%s_001.tmp' % args.file_name), 'rb') as f_read_tmp:
         # 读取 文本行数 及 各词组词频数
         word_1_count = pickle.load(f_read_tmp)
@@ -265,9 +265,10 @@ def search_2_word(process_i, queue_data, args, p_min=0.00001, co_min=100, h_min=
             back_freedom = get_freedom(back_word_num)
             # 计算满足自由度要求的词组的覆盖率与重复率
             if min(front_freedom, back_freedom) > h_min:
-                den = get_den(args=args, keyword=word_i, corpus=corpus)
-                rep = get_Rep(args=args, keyword=word_i, corpus=corpus)
+                den = get_den(args=args,keyword=word_i, corpus=corpus)
+                rep = get_rep(keyword=word_i, corpus=corpus)
                 search_result.append([word_i, 2, word_i_count, co, front_freedom, back_freedom,den,rep])
+
                 logger_i.debug('{},{},{},{:.1f},{:.3f},{:.3f}'.format
                                (word_i, 2, word_i_count, co, front_freedom, back_freedom,den,rep))
 
@@ -368,7 +369,7 @@ def word_discover(args, parameter, process_no=None):
     logger.info('- ' * 30)
 
 if __name__ == '__main__':
-    # temp_path = os.path.join(os.path.abspath(os.path.join(os.path.abspath(os.path.dirname(__file__)), '..')), 'temp')
+    # temp_path = os.path.join(os.path.abspath(os.path.join(os.path.abspath(os.path.dirname(__file__)), '..')), 'Temp')
     # file_name = 'BV1Ct411c7tQ.csv'
     # with open(os.path.join(temp_path, 'WordCount_%s_002.tmp' % file_name), 'rb') as f_read_tmp:
     #     # 读取 文本行数 及 各词组词频数

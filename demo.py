@@ -13,12 +13,12 @@ import pandas as pd
 
 
 if __name__ == '__main__':
-    bvids = pd.read_csv('Data/100预测.csv')['videoBvno'].tolist()
-
+    bvids = pd.read_csv('Data/1000训练预测.csv')['videoBvno'].tolist()
+    #bvids = ['BV1St4y1y78p']
     for bvid in bvids:
         new_word_discover(bvid+'.csv', f_data_col='bulletContent', f_time_col='videoLength', f_encoding='utf-8', f_txt_sep='\n',
                           batch_len=10000000,
-                          n_gram=5, p_min=5, co_min=4, h_min=1.2, top_n=10000000,emojiCorpus='emojis.csv',modernCorpus='ModernCorpus.csv',newWordCorpus='newWordCorpus.csv')
+                          n_gram=5, p_min=8, co_min=4, h_min=1.2, top_n=10000000,emojiCorpus='emojis.csv',modernCorpus='ModernCorpus.csv',newWordCorpus='newWordCorpus.csv')
         time.sleep(2)
 
 
@@ -35,7 +35,7 @@ if __name__ == '__main__':
     h_min:      最大自由度，若小于最大自由度，则认为词组不完整，为大词组中的一小部分  【dytpe: int, default 1.2】
     level_s:    界面显示日志级别.  ['DEBUG', 'INFO', 'WARNING', 'ERROR', 'CRITICAL']  默认 INFO
     level_f:    日志文件记录级别.  ['DEBUG', 'INFO', 'WARNING', 'ERROR', 'CRITICAL']  默认 INFO
-    log_path:   日志存储路径，默认为 None，默认存储到 .\\NLP\\log\\NLP_[当前时间].log
+    log_path:   日志存储路径，默认为 None，默认存储到 .\\NLP\\Log\\NLP_[当前时间].Log
     process_no: 多进程处理的进程数，int 类型，默认为None 即 CPU 核数
     emojiCorpus: 颜文字语料库 【字符串】
     modernCorpus: 现代汉语语料库 【字符串】

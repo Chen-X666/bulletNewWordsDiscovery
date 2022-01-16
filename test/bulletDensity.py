@@ -13,16 +13,6 @@ import pandas as pd
 import numpy as np
 
 
-def findkeywordnum(sTxtStr,keyword):
-  maxnum=0
-  macthall = re.finditer(r'(?im)^.*?' + re.escape(keyword) +  '.*' , sTxtStr)
-  if macthall:
-     for everymatch in macthall:
-         matchObj = re.findall('(?im)' + re.escape(keyword) ,everymatch.group())
-         if matchObj:
-            if len(matchObj) > maxnum:
-               maxnum=len(matchObj)
-  return maxnum
 
 def candicateDen(videoLength,sTxtStr,keyword):
     videoLength = videoLength
@@ -35,8 +25,8 @@ def candicateDen(videoLength,sTxtStr,keyword):
 
 
 # 搜索函数
-def findkeywordnumc( sTxtStr , keyword):
-  maxnum=0
+def get_rep(sTxtStr , keyword):
+  num=0
   macthall = re.finditer(r'(?i)(' + re.escape(keyword) +  ')+' , sTxtStr)
   if macthall:
      for everymatch in macthall:
@@ -46,9 +36,10 @@ def findkeywordnumc( sTxtStr , keyword):
             countnum=0
             for mctline in macthLine:
                countnum+=1
-            if countnum > maxnum:
-              maxnum=countnum
-  return maxnum
+            countnum = countnum - 1
+            num = num + countnum
+  return num
+
 
 
 if __name__ == '__main__':
@@ -88,7 +79,8 @@ if __name__ == '__main__':
     keyword = "给力"  # 搜索关键词
     #findnum = findkeywordnumc(sTxtStr, keyword)
     den = candicateDen(123,str(sTxtStr),keyword)
-    print(den)
+    rep = get_rep(str(sTxtStr),keyword)
+    print(rep)
 
 
 

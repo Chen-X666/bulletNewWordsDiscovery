@@ -11,7 +11,7 @@ Describe:  Github link: https://github.com/Chen-X666
 核心思想：
         凝固度  p_xy / (p_x * p_y)
             若词X 词Y 一起出现的概率除以其各出现概率，值越大，说明词X 词Y 经常出现在一起的概率越高
-        自由度  sum(-pi*log(pi))
+        自由度  sum(-pi*Log(pi))
             若词X 词Y 两侧出现的词越多越杂，即其两侧取词的自由度越高，词X 词Y 越独立，
             若有一侧自由度很低，则说明 词X 词Y 不是单独出现，可能为 XYZ 词中一部分
 
@@ -50,8 +50,8 @@ project_name = os.path.basename(os.path.abspath(os.path.dirname(__file__)))
 
 # ############################ 创建文件夹 ##############################################
 # 判断是否存在临时文件夹 ，若无则重新创建
-if not os.path.isdir(os.path.join(CWD, 'temp')):
-    os.mkdir(os.path.join(CWD, 'temp'))
+if not os.path.isdir(os.path.join(CWD, 'Temp')):
+    os.mkdir(os.path.join(CWD, 'Temp'))
 
 # 判断是否存在结果文件夹 ，若无则重新创建
 if not os.path.isdir(os.path.join(CWD, 'CandidateWordResult')):
@@ -62,5 +62,5 @@ if not os.path.isdir(os.path.join(CWD, 'NewWordResult')):
     os.mkdir(os.path.join(CWD, 'NewWordResult'))
 
 # 判断是否存在日志文件夹 ，若无则重新创建
-if not os.path.isdir(os.path.join(CWD, 'log')):
-    os.mkdir(os.path.join(CWD, 'log'))
+if not os.path.isdir(os.path.join(CWD, 'Log')):
+    os.mkdir(os.path.join(CWD, 'Log'))

@@ -25,11 +25,11 @@ def logger_set(path, f_level='DEBUG', s_level='DEBUG', name='main'):
     logger = logging.getLogger(name)
     logger.setLevel(logging.DEBUG)
 
-    # 输入为文件名时，默认其存放路径为 log 文件夹下。 输入为文件绝对路径时保存到路径文件上【方便与其它代码合并日志】
+    # 输入为文件名时，默认其存放路径为 Log 文件夹下。 输入为文件绝对路径时保存到路径文件上【方便与其它代码合并日志】
     if not os.path.isfile(path):
         #  当前文件路径 的上层路径， 'NLP' 所在目录   'C:\Users\Chen\Desktop\NLP_Project'
         cwd = os.path.abspath(os.path.join(os.path.abspath(os.path.dirname(__file__)), '../..'))
-        path = os.path.join(cwd, 'log', path)
+        path = os.path.join(cwd, 'Log', path)
 
     # 创建一个handler，用于写入日志文件 【默认为 DEBUG 级别】
     fh = logging.FileHandler(path)
@@ -74,10 +74,10 @@ if __name__ == '__main__':
     # 当前文件路径 的上层路径， 'Code' 所在目录
     CWD = os.path.abspath(os.path.join(os.path.abspath(os.path.dirname(__file__)), '..'))
     print('Current Path: %s' % CWD)
-    # log_path_test = os.path.join(cwd, 'temp', 'test__%s.log' % os.path.basename(__file__))
+    # log_path_test = os.path.join(cwd, 'Temp', 'test__%s.Log' % os.path.basename(__file__))
 
     # 日志创建设置
-    logger_set(path=os.path.join(CWD, '_test.log'), f_level='DEBUG', name="main")
+    logger_set(path=os.path.join(CWD, '_test.Log'), f_level='DEBUG', name="main")
 
     my_logger = logging.getLogger('main')
     my_logger.debug('this is debug info')
@@ -92,7 +92,7 @@ if __name__ == '__main__':
     my_logger.debug('Clear Handlers!!!!!!!!!!!!!')  # 清空后，日志不再记录
 
     # 日志创建设置，创建另一个名称为 test 的logger, 若日志保存名称相同时，直接添加在同一文件中；若名称不同，另创建文件
-    logger_set(path='_test.log', f_level='WARNING', s_level='WARNING', name="test")
+    logger_set(path='_test.Log', f_level='WARNING', s_level='WARNING', name="test")
     my_logger = logging.getLogger('test')
     my_logger.debug('test    this is debug info')
     my_logger.info('test    this is information')

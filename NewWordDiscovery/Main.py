@@ -48,7 +48,7 @@ def new_word_discover(file, f_data_col=None, credential=None, f_time_col = None,
     :param h_min:      最大自由度，若小于最大自由度，则认为词组不完整，为大词组中的一小部分  【dytpe: int, default 1.2】
     :param level_s:    界面显示日志级别.  ['DEBUG', 'INFO', 'WARNING', 'ERROR', 'CRITICAL']  默认 INFO
     :param level_f:    日志文件记录级别.  ['DEBUG', 'INFO', 'WARNING', 'ERROR', 'CRITICAL']  默认 INFO
-    :param log_path:   日志存储路径，默认为 None，默认存储到 .\\NLP\\log\\NLP_[当前时间].log
+    :param log_path:   日志存储路径，默认为 None，默认存储到 .\\NLP\\Log\\NLP_[当前时间].Log
     :param process_no: 多进程处理的进程数，int 类型，默认为None 即 CPU 核数
     :return:
     """
@@ -81,11 +81,11 @@ def new_word_discover(file, f_data_col=None, credential=None, f_time_col = None,
         file = os.path.join(cwd, 'Data', file)
     #空时间的判断
     if len(pd.read_csv(file)[f_time_col].to_list())==0: args.videoLength=0
-    else: args.videoLength = pd.read_csv(file)[f_time_col].to_list()[0]
+    else: args.videoLength = max(pd.read_csv(file)[f_time_col].to_list())
 
     # 设置日志名称或路径，加入到存储类中
-    if log_path is None:    # 无用户输入路径，则默认存储到 .\NLP\log\NLP_20180627142417.log 中
-        args.path_log = '%s_NewWordDiscover_%s.log' % ('NLP', args.Call_Time)
+    if log_path is None:    # 无用户输入路径，则默认存储到 .\NLP\Log\NLP_20180627142417.Log 中
+        args.path_log = '%s_NewWordDiscover_%s.Log' % ('NLP', args.Call_Time)
     else:  # 用户指定输入路径
         args.path_log = log_path
 
@@ -100,7 +100,7 @@ def new_word_discover(file, f_data_col=None, credential=None, f_time_col = None,
     logger.info('NewWordDiscover Setting {}'.format(args))
     logger.info('NewWordDiscover Starting......')
 
-    # 滑动取词，并统计， 结果以 pickle 文件 临时存储到 temp 文件夹中
+    # 滑动取词，并统计， 结果以 pickle 文件 临时存储到 Temp 文件夹中
     multi_count_word(args, process_no=process_no)
 
     # 搜索词的参数  n_gram: [p_min=0.00001, co_min=100, h_min=2]

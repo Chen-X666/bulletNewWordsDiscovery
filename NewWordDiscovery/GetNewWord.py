@@ -22,22 +22,38 @@ from .edgeAdvanced import edgeAdavanced
 logger = logging.getLogger('NLP')
 from NewWordDiscovery.tool.initialingCorpus import *
 
+
+def standard(csv_path,column):
+    df = pd.read_csv(csv_path,encoding='GBK')
+    if len(df[column].to_list())==0:print('0')
+    else:
+        Max = max(df[column].to_list())
+        if Max!=0: df[column] = df[column]/Max
+        else:print('0')
+        df.to_csv(csv_path,encoding='GBK',index=False)
+
 def deleteTemp():
     cwd = os.path.abspath(os.path.join(os.path.abspath(os.path.dirname(__file__)), '..'))
-    file = os.path.join(cwd, 'temp')
-    shutil.rmtree(file)
+    file = os.path.join(cwd, 'Temp')
+    del_list = os.listdir(file)
+    for f in del_list:
+        file_path = os.path.join(file, f)
+        if os.path.isfile(file_path):
+            os.remove(file_path)
+        elif os.path.isdir(file_path):
+            shutil.rmtree(file_path)
 
 def get_new_word(args):
     modernCorpus = getModernCorpus(args.modernCorpus)
     newWordCorpus = getNewWordCorpus(args.newWordCorpus)
     # 读取文件夹下所有文件名称
-    file_list = os.listdir(os.path.join(args.CWD, 'temp'))
+    file_list = os.listdir(os.path.join(args.CWD, 'Temp'))
     # 提取新词发现对应的文件
     file_list = [file_i for file_i in file_list if 'CandidateWordResult_%s' % args.file_name in file_i]
     # 合并各个进程的搜索结果
     result_count = []
     for file_i in sorted(file_list, reverse=False):
-        with open(os.path.join(args.CWD, 'temp', file_i), 'rb') as f_read_tmp:
+        with open(os.path.join(args.CWD, 'Temp', file_i), 'rb') as f_read_tmp:
             # 读取 文本行数 及 各词组词频数
             result_count_i = pickle.load(f_read_tmp)
             # 合并 搜索结果
@@ -76,6 +92,7 @@ def get_new_word(args):
 
 
     logger.info("CandidateWordResult path:  {}  ".format(csv_path))
+    standard(csv_path, column='Rep')
     #deleteTemp()#删除全部本地缓存
 
     return csv_path

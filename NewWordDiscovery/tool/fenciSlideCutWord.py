@@ -13,7 +13,7 @@ Describe:  Github link: https://github.com/Chen-X666
 3、 batch  每批次进行统计的文本行数， 数值调小可降低内存占用，相反运行时间将相对较长
 4、 top_n  保存频数前 top_n 的文本
 
-结果保存在 temp 文件夹中 如 WordCount_temp_024.tmp  数值代表窗口大小 【pickle 文件，可直接读取 result_count】
+结果保存在 Temp 文件夹中 如 WordCount_temp_024.tmp  数值代表窗口大小 【pickle 文件，可直接读取 result_count】
 
 # 当前项目: NewWordDiscovery
 # 创建时间: 2018/10/5 16:55
@@ -101,7 +101,7 @@ def count_word(process_i, queue_data, windows, args):
     result_count = Counter(dict(result_count.most_common(args.top_n)))
 
     # 返回 出现最大的前N个词组及对应数量
-    with open(os.path.join(args.CWD, 'temp',
+    with open(os.path.join(args.CWD, 'Temp',
                            'WordCount_%s_%03d.tmp' % (os.path.basename(args.path_corpus), windows)), 'wb') as f:
         pickle.dump(result_count, f)
 
