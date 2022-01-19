@@ -18,7 +18,7 @@ if __name__ == '__main__':
     for bvid in bvids:
         new_word_discover(bvid+'.csv', f_data_col='bulletContent', f_time_col='videoLength', f_encoding='utf-8', f_txt_sep='\n',
                           batch_len=10000000,
-                          n_gram=5, p_min=8, co_min=4, h_min=1.2, top_n=10000000,emojiCorpus='emojis.csv',modernCorpus='ModernCorpus.csv',newWordCorpus='newWordCorpus.csv')
+                          n_gram=5, p_min=8, co_min=5, h_min=1.2, top_n=10000000,emojiCorpus='emojis.csv',modernCorpus='ModernCorpus.csv',newWordCorpus='newWordCorpus.csv')
         time.sleep(2)
 
 

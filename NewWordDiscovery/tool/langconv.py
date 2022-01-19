@@ -168,7 +168,7 @@ class StatesMachine(object):
                     else:
                         self.pool = node.from_word
         elif self.state == END:
-            # END is a new START
+            # END is a CandidateWordResult START
             self.state = START
             new = self.feed(char, map)
         elif self.state == FAIL:

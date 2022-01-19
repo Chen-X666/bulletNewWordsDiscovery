@@ -92,7 +92,7 @@ def get_new_word(args):
 
 
     logger.info("CandidateWordResult path:  {}  ".format(csv_path))
-    standard(csv_path, column='Rep')
+    #standard(csv_path, column='Rep')
     #deleteTemp()#删除全部本地缓存
 
     return csv_path

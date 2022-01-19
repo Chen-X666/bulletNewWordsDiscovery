@@ -122,8 +122,8 @@ def new_word_discover(file, f_data_col=None, credential=None, f_time_col = None,
     result_csv = get_new_word(args)
 
     #候选词预测
-    logger.info('PredictCandidateWords Starting......')
-    predictNewWord(args=args)
+    #logger.info('PredictCandidateWords Starting......')
+    #predictNewWord(args=args)
 
 
     # 结束。 计算用时
